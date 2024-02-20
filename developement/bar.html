@@ -1,0 +1,36 @@
+<progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+<span id="status"></span>
+<h1 id="finalMessage"></h1>
+<button id="btn" onclick="funct()">reset</button>
+<script>
+function progressBarSim(al,exit) {	var bar = document.getElementById('progressBar');
+debugger
+	if(exit == 1){
+				bar.value = 0;
+
+		console.log("inside 1")
+		clearTimeout(sim)
+	}
+	var status = document.getElementById('status');
+	status.innerHTML = al+"%";
+	bar.value = al;
+	al--;
+	var sim = setTimeout("progressBarSim("+al+")",1000);
+	if(al == 0){
+		status.innerHTML = "100%";
+		bar.value = 10;
+		clearTimeout(sim);
+		var finalMessage = document.getElementById('finalMessage');
+		finalMessage.innerHTML = "Process is complete";
+	}
+	
+}
+var amountLoaded = 3;
+progressBarSim(amountLoaded);
+
+function funct(){
+	console.log("clicked")
+	progressBarSim(3,1);	
+}
+</script>
+

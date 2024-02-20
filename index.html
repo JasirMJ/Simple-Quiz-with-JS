@@ -1,0 +1,189 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css.css">
+	<script type="text/javascript" src="questions.js"></script>
+
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="underscore-min.js"></script>
+	<script type="text/javascript" src="backbone-min.js"></script>
+
+	<!-- <script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script type = "text/javascript" src = "https://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+	<script type = "text/javascript" src = "https://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script> -->
+
+</head>
+<style type="text/css">
+	.maincontainer{
+		border-radius: 1000px;
+		margin-top: 5%;
+		width: 500px;
+		height: 500px;
+		background-color:#8BF7FE;
+		/*border: 25px solid green;*/
+		padding: 50px;
+	}
+	.maincontainer:hover{
+		-webkit-transition-duration: 2s;
+
+		/*background-color: #39EBFE;*/
+		background-color: #00b8e6;
+	}
+
+	table{
+
+		table-layout: fixed;
+		/*border: 1px;*/
+		width: 1200px;
+		
+
+	}
+	#start{
+	  margin-top: 100px;
+	  /*background-color:#7CF6FE; /* aaqua */*/
+	  border: none;
+	  color: white;
+	  padding: 16px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+
+	  border-radius: 50%;
+	  width: 200px;
+	  height: 200px;
+
+	  -webkit-transition-duration: 0.4s; /* Safari */
+	  transition-duration: 0.4s;
+	  cursor: pointer;
+	  background-color: #39EBFE; 
+  color: black; 
+  border: 5px solid #BAFCFE;
+	}
+	#start:hover {
+	border: 5px solid #FFFFFF;
+	background-color: #8BF7FE;
+	color: white;
+}
+.quiz{
+	font-size: 30px;
+	/*font-weight:500;*/
+	font-variant:small-caps;
+	font-weight:bolder;
+}
+
+#button-next{
+	margin-top: 200px;
+	/*background-color:#7CF6FE; /* aaqua */*/
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+
+	/*border-radius: 50%;
+	width: 200px;
+	height: 200px;
+*/
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+	background-color: #39EBFE; 
+	color: black; 
+	border: 5px solid #97FE2F;
+}
+#button-next:hover {
+		border: 5px solid #FFFFFF;
+  background-color: #8BF7FE;
+  color: white;
+}
+
+#btn-skip{
+	margin-top: 200px;
+	/*background-color:#7CF6FE; /* aaqua */*/
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+
+	/*border-radius: 50%;
+	width: 200px;
+	height: 200px;
+*/
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+	background-color: #39EBFE; 
+	color: black; 
+	border: 5px solid #FE2F2F;
+}
+#btn-skip:hover {
+		border: 5px solid #FFFFFF;
+  background-color: #FE3232;
+  color: white;
+}
+
+/*arc*/
+#display{
+	font-size: 16px;
+}
+.tableDiv{
+	padding-top: 100px;
+}
+#result{
+	border-radius: 20px;
+	box-shadow: 10px 10px 10px grey;
+	height: 400px;
+	width: 800px;
+	background-color: #FFFFEE;
+	margin-top: 100px;
+	padding-top: 50px;
+	font-size: 30px;
+	/*font-weight:500;*/
+	font-variant:small-caps;
+	font-weight:bolder;
+}
+</style>
+<body>
+	<div class="container">
+		<div id="task-time" class="skills html" >Remaning</div></div>
+	</div>
+	<div id="time"></div>
+	<div id="task-time"></div>
+	<div align="center" id="exam-on-going" class="tableDiv">
+		<table  class="w3-table">
+			<tr><td colspan="2"><p><pre id="display"></pre></p></td></tr>
+			<tr>
+				<td><input type="radio" name="Option" value="1" ><label id ="Option1"></label></td>
+				<td><input type="radio" name="Option" value="2"><label id ="Option2"></label></td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="Option" value="3" ><label id ="Option3"></label></td>
+				<td><input type="radio" name="Option" value="4" ><label id ="Option4"></label></td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<br>
+		<br><br>
+		<br>
+		<button id="button-next">Next</button><br>
+		<button id="btn-skip" hidden>Skip</button>
+	</div><center>
+	<div id="result"></div>
+	
+	<div id="start-id" class="maincontainer"><br><br><br><br><br><br><br><!-- <br><br><br><br><p class="quiz">Click on the button to Start Python Quiz</p> --><div>
+		<br>
+		<button id="start">Im Ready</button></div></div>
+		</center>
+
+</body>
+<script type="text/javascript" src="js.js"></script>
+</html>

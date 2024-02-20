@@ -1,0 +1,288 @@
+<html>
+<head>
+	<style type="text/css">
+	.container {
+  width: 100%;
+  background-color: #ddd;
+}
+
+.skills {
+  
+  padding-right: 20px;
+  line-height: 40px;
+  color: white;
+}
+
+.html { background-color: #4CAF50;}
+	td{
+		width: 30%;
+	}
+	</style>
+	<script type="text/javascript">
+		questions = [{
+			"Quest":"1#ur name?",
+			"opt1":"jasir",
+			"opt2":"anwin",
+			"opt3":"sabith",
+			"opt4":"rishad",
+			"answer":"1"
+		},{
+			"Quest":"2#ur age?",
+			"opt1":"22",
+			"opt2":"23",
+			"opt3":"24",
+			"opt4":"25",
+			"answer":"1"
+		},{
+			"Quest":"3#3333?",
+			"opt1":"22",
+			"opt2":"23",
+			"opt3":"24",
+			"opt4":"25",
+			"answer":"1"
+		},{
+			"Quest":"4#4asdc4?",
+			"opt1":"22",
+			"opt2":"23",
+			"opt3":"24",
+			"opt4":"25",
+			"answer":"1"
+		}]
+	</script>
+	<script type = "text/javascript" src = "https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script type = "text/javascript" src = "https://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+	<script type = "text/javascript" src = "https://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+
+</head>
+
+<body>
+	<div class="container">
+		<div id="task-time" class="skills html" >Remaning</div></div>
+	</div>
+	<div id="time"></div>
+	<div id="task-time"></div>
+	<div align="center" id="exam-on-going">
+		<table>
+			<tr><td><pre id="display"></pre></td></tr>
+			<tr>
+				<td><input type="radio" name="Option" value="1" ><label id ="Option1"></label></td>
+				<td><input type="radio" name="Option" value="2"><label id ="Option2"></label></td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="Option" value="3" ><label id ="Option3"></label></td>
+				<td><input type="radio" name="Option" value="4" ><label id ="Option4"></label></td>
+			</tr>
+		</table>
+		<button id="button-next">Next</button><br>
+		<button id="btn-skip" hidden>Skip</button>
+	</div>
+	<div id="result">
+		<p id="total-marks"></p>
+	</div>
+	
+
+</body>
+<script type="text/javascript">
+
+	var questionAtDisplay;
+	var option1;
+	var option2;
+	var option3;
+	var option4;
+	var choosedAnswer;
+	var questionIndex = 0;
+	var totalQuestion = questions.length;
+	var score = 0;
+	var min = 0;
+	var taskTimer;
+	var timer;
+	var timeForEach = 5;
+
+	Totaltime(0,"time");
+
+	function taskTime(t){
+		var setSec = t;
+		console.log(setSec)
+		document.getElementById("task-time").innerHTML = "Hurry ! " + setSec;
+		setSec--;
+		taskTimer = setTimeout('taskTime('+setSec+')',1000);
+		if(setSec < 0){
+			clearTimeout(taskTimer);
+			skip()
+		}
+		else{
+			console.log("else part")
+		}
+	}
+
+	function skip(){
+		clearTimeout(taskTimer);
+		// taskTime(timeForEach)
+		questionIndex++;
+		controller(questionIndex)
+		$("#btn-skip").hide()
+		setTimeout( function(){$("#btn-skip").show()},1000)
+	}
+
+	function Totaltime(sec,elem){
+		var element = document.getElementById(elem);
+		element.innerHTML = "Total time taken : " + min + " m :" + sec+" s";
+		if(sec == 60) {
+			min++;
+			sec = 0;  
+		}
+		sec++;
+		timer = setTimeout('Totaltime('+sec+',"'+elem+'")',1000);
+	}
+
+	$(document).ready(function(){
+		$("#result").hide();
+		showQuestion("0");
+
+		// taskTime(3)
+
+		setTimeout( function(){$("#btn-skip").show()},1000)
+
+		$("input[name = Option]").click(function(){
+			choosedAnswer = document.querySelector('input[name="Option"]:checked').value	;
+			console.log("choosedAnswer : "+choosedAnswer)
+		})
+		// debugger
+		$("#button-next").click(function(){
+			$("#btn-skip").hide()
+			setTimeout( function(){$("#btn-skip").show()},1000)
+			if (!choosedAnswer) {
+				alert("choose any one option ")
+			}
+			else{
+				document.querySelector('input[name="Option"]:checked').checked = false;
+				questionIndex++;
+				controller(questionIndex);
+				console.log("key : "+ questions[(questionIndex - 1)].answer )
+				if(choosedAnswer == questions[(questionIndex - 1)].answer){
+					clearTimeout(taskTimer);
+					// alert("true")
+					score += 5
+				}
+				else{
+					console.log("wrong")
+				}
+			}
+		})
+		$("#btn-skip").click(function(){
+			// clearTimeout(taskTimer);
+			console.log("stopped time from btnskip")
+			skip()
+		})
+	});
+
+	function controller(){
+		if(questionIndex == totalQuestion) {
+			// clearTimeout(taskTimer);
+			$("#task-time").hide();
+			clearTimeout(timer);
+			// alert("completed")
+			$("#exam-on-going").hide()
+			console.log(score)
+			// alert("Score :"+score)
+			$("#result").show();
+			// $("#total-marks").innerHTML = "You score out of " + 5*totalQuestion+ "is : "+score
+			alert("Your total score : "+score)
+
+		}
+
+		else{
+			clearTimeout(taskTimer);
+			showQuestion(questionIndex)
+			// clearTimeout(taskTimer);
+		}
+	}
+
+
+
+	function showQuestion(questionIndex){
+		taskTime(timeForEach)
+		$("#display").html(questions[questionIndex].Quest);
+		$("#Option1").html(questions[questionIndex].opt1);
+		$("#Option2").html(questions[questionIndex].opt2);
+		$("#Option3").html(questions[questionIndex].opt3);
+		$("#Option4").html(questions[questionIndex].opt4);
+	}
+
+
+
+	
+
+/*	var a = 90
+	function funt(){
+				document.getElementById("html").style.width = (a+"%");
+
+		a -= 10
+		console.log(a)
+	}*/
+
+/*	function countDown(remaning_sec,elem) {
+		// var element = document.getElementById(elem);
+		document.getElementById("task-time").style.width = (remaning_sec+"%");
+		console.log(remaning_sec)
+		// element.innerHTML = "Please wait for "+secs+" seconds";
+		if(remaning_sec < 50) {
+			clearTimeout(timer);
+			skip();
+			countDown(100,"task-time")
+			return
+		}
+		if(elem == 1){
+			document.getElementById("task-time").style.width = (remaning_sec+"%");
+			alert("something happend")
+		}
+		remaning_sec--;
+		var timer = setTimeout('countDown('+remaning_sec+')',100);
+		// var timer = setTimeout('countDown('+remaning_sec+',"'+elem+'")',80);
+	}
+	countDown(100,0)*/
+
+
+
+
+	// function tasktime(){
+	// 	var task_time = 10000 //10sec
+	// 	var task_time_element =	document.getElementById("task-time");
+	// }
+
+/*	function progressBarSim(al,exit) {
+
+		var bar = document.getElementById('progressBar');
+		bar.value = al;
+		al--;
+		var sim = setTimeout("progressBarSim("+al+")",20);
+		console.log(al)
+		if(al == 0){
+			
+
+			// alert("over")
+			// status.innerHTML = "100%";
+			clearTimeout(sim);
+			
+			// bar.value = 0;
+			bar.value = 100;
+			// skip()
+			// console.log(sim)
+			// return
+		}
+		if(exit == 1){
+			console.log("exit called")
+			delete sim;
+			clearTimeout(sim);
+			bar.value = 100;
+			clearTimeout(sim);
+			return
+		}
+	}*/
+	// var amountLoaded = 100;
+	
+
+
+
+</script>
+</html>
